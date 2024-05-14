@@ -23,7 +23,7 @@ public class MemberMemoryRepo {
     // 멤버 저장 기능
     public void save(Member member) {
         memberList.add(member);
-        System.out.println(memberList);
+//        System.out.println(memberList);
     }
 
     // 멤버 전체 조회 기능
