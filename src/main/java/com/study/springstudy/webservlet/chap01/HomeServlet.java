@@ -13,7 +13,8 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         RequestDispatcher dp = req.getRequestDispatcher("/WEB-INF/index.jsp");
-        dp.forward(req,resp);
+        dp.forward(req, resp);
     }
 }

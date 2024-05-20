@@ -7,12 +7,13 @@ import org.junit.jupiter.api.Test;
 class HotelDiTest {
 
     @Test
-    void diTest(){
+    void diTest() {
 
         HotelManager manager = new HotelManager();
 
         Hotel hotel = manager.hotel();
         hotel.inform();
+
     }
 
 }

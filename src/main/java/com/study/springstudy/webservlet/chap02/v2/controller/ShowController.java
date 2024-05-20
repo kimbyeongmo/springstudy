@@ -2,6 +2,7 @@ package com.study.springstudy.webservlet.chap02.v2.controller;
 
 import com.study.springstudy.webservlet.MemberMemoryRepo;
 import com.study.springstudy.webservlet.View;
+import com.study.springstudy.webservlet.chap02.v1.controller.ControllerV1;
 import com.study.springstudy.webservlet.entity.Member;
 
 import javax.servlet.RequestDispatcher;
@@ -19,7 +20,6 @@ public class ShowController implements ControllerV2 {
     public View process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Member> memberList = repo.findAll();
-
         request.setAttribute("memberList", memberList);
 
         return new View("v2/m-list");

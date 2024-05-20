@@ -17,7 +17,7 @@
     
     <h1>프론트컨트롤러V1 회원가입 양식</h1>
 
-    <form action="/chap01/v1/save" method="post">
+    <form action="/chap02/v1/save" method="post">
         <label>
             # 계정명: <input type="text" name="account">
         </label>

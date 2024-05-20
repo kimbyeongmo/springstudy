@@ -1,20 +1,22 @@
 package com.study.springstudy.core.chap02;
 
+
 /*
- * @Solution
- * - 먼저 DIP(의존관계)를 해결하기 위해 구체적인 객체 대신
- *   추상적인 역할에 코드를 개선
+ * @solution
+ * - 먼저 DIP를 해결하기 위해 구체적인 객체 대신
+ * 추상적인 역할에 의존하게 코드를 개선
  *
  * @problem - 추상화를 했지만 여전히 의존객체를 바꾸려면
  *            코드를 직접 변경해야 한다.
  */
+
 public class Hotel {
 
     // 레스토랑
-    private Restaurant restaurant = new AsianRestaurant();
+    private Restaurant restaurant = new WesternRestaurant();
 
     // 헤드쉐프
-    private Chef headChef = new KimuraChef();
+    private Chef headChef = new JannChef();
 
     // 호텔을 소개하는 기능
     public void inform() {

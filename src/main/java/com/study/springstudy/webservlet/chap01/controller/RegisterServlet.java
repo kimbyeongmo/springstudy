@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 @WebServlet("/chap01/join")
 public class RegisterServlet extends HttpServlet {
 
@@ -16,7 +17,8 @@ public class RegisterServlet extends HttpServlet {
 
         String viewName = "/WEB-INF/views/reg_form.jsp";
 
-        RequestDispatcher dp= req.getRequestDispatcher(viewName);
+        RequestDispatcher dp
+                = req.getRequestDispatcher(viewName);
         dp.forward(req, resp);
     }
 }

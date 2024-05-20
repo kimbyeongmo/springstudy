@@ -1,8 +1,8 @@
 package com.study.springstudy.core.chap02;
 
-public class FrenchCourse implements Course{
+public class FrenchCourse implements Course {
 
-    public void combineMenu(){
+    public void combineMenu() {
         System.out.println("====== 프렌치 코스 구성 ======");
         System.out.println("1. 제철 채소, 퀴노아");
         System.out.println("2. 트러플 크림 스프");

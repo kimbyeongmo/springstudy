@@ -6,7 +6,7 @@ public class AsianRestaurant {
 
     private SushiCourse course = new SushiCourse();
 
-    public void orderMenu(){
+    public void orderMenu() {
         System.out.println("아시안 요리를 주문합니다.");
         course.combineMenu();
         chef.cooking();

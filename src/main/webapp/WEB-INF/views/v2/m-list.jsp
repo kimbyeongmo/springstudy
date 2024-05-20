@@ -21,7 +21,7 @@
 
         <c:forEach var="m" items="${memberList}">
             <li>
-                아이디: ${m.account},
+                # 아이디: ${m.account},
                 <a href="#">
                     이름: ${m.userName} 
                 </a> 

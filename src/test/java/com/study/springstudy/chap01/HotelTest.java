@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class HotelTest {
 
     @Test
-    void hotelTest(){
+    void hotelTest() {
 
         Hotel hotel = new Hotel();
         hotel.inform();

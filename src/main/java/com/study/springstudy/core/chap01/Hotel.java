@@ -1,5 +1,6 @@
 package com.study.springstudy.core.chap01;
 
+
 /*
  * @problem - 호텔 클래스에서 직접 객체를 생성하면
  *            나중에 의존객체(레스토랑, 헤드쉐프)를 변경해야 될 때
@@ -8,6 +9,7 @@ package com.study.springstudy.core.chap01;
  *            그리고 headChef가 변경되면 레스토랑 안에
  *              쉐프도 같이 바뀌어야 할 때 2군데를 수정해야 함.
  */
+
 public class Hotel {
 
     // 레스토랑

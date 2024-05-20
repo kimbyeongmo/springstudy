@@ -1,16 +1,18 @@
 package com.study.springstudy.core.chap03;
 
+
 /*
- * @Solution
+ * @solution
  * - 객체 생성의 제어권을 이 클래스에서
  *   다른 클래스로 이전한다.
  *   ex) new 생성자();  -> 이 문법을 담당클래스를 정해서 몰아서 수행시킴
  * - 호텔 객체 생성시 반드시 의존객체를 전달하도록 강요
  *
  *
- * // 제어의 역전(IoC) : 객체 생성의 제어권을 외부로 넘긴다.
-   // 의존성 주입(DI) : 외부에서 생성된 객체를 주입받는 개념
+ *  // 제어의 역전(IoC) : 객체 생성의 제어권을 외부로 넘긴다.
+    // 의존성 주입(DI) : 외부에서 생성된 객체를 주입받는 개념
  */
+
 public class Hotel {
 
     // 레스토랑
@@ -32,5 +34,6 @@ public class Hotel {
                 , headChef.getClass().getSimpleName());
 
         restaurant.order();
+        headChef.cook();
     }
 }

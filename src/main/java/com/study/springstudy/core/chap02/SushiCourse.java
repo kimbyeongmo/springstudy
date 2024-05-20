@@ -1,8 +1,8 @@
 package com.study.springstudy.core.chap02;
 
-public class SushiCourse implements Course{
+public class SushiCourse implements Course {
 
-    public void combineMenu(){
+    public void combineMenu() {
         System.out.println("====== 스시 코스 구성 ======");
         System.out.println("1. 대합 맑은국");
         System.out.println("2. 전어, 고등어, 도미 스시");

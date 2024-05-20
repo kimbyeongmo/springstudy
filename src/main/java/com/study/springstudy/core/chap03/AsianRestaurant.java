@@ -11,7 +11,7 @@ public class AsianRestaurant implements Restaurant {
         this.course = course;
     }
 
-    public void order(){
+    public void order() {
         System.out.println("아시안 요리를 주문합니다.");
         course.combineMenu();
         chef.cook();

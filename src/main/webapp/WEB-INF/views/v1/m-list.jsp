@@ -21,7 +21,7 @@
 
         <c:forEach var="m" items="${memberList}">
             <li>
-                아이디: ${m.account},
+                # 아이디: ${m.account},
                 <a href="#">
                     이름: ${m.userName} 
                 </a> 
@@ -33,7 +33,7 @@
 
     </ul>
 
-    <a href="/chap01/v1/join">새로운 회원가입하기</a>
+    <a href="/chap02/v1/join">새로운 회원가입하기</a>
 
 
     

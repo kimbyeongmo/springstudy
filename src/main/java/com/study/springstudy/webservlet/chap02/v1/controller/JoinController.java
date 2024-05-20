@@ -13,7 +13,8 @@ public class JoinController implements ControllerV1 {
 
         String viewName = "/WEB-INF/views/v1/reg_form.jsp";
 
-        RequestDispatcher dp = request.getRequestDispatcher(viewName);
+        RequestDispatcher dp
+                = request.getRequestDispatcher(viewName);
         dp.forward(request, response);
 
     }

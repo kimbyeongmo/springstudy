@@ -21,7 +21,7 @@ public class ShowController implements ControllerV1 {
 
         request.setAttribute("memberList", memberList);
 
-        String viewName = "/WEB-INF/views/v1/m-list.jsp";
+        String viewName = "/WEB-INF/views/m-list.jsp";
 
         RequestDispatcher dp = request.getRequestDispatcher(viewName);
         dp.forward(request, response);

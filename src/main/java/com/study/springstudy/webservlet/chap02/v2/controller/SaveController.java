@@ -21,13 +21,10 @@ public class SaveController implements ControllerV2 {
         String password = request.getParameter("password");
 
         Member member = new Member(account, password, userName);
-
         repo.save(member);
 
-//        response.sendRedirect("WEB-INF/views/v1/chap01/show");
-
+//        response.sendRedirect("/chap02/v1/show");
         return new View("redirect:/chap02/v2/show");
-
 
     }
 }

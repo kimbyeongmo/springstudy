@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-// 브라우저의 /chap02/v2/~ 시작하는 요청을 처리하는 서블릿
+// 브라우저의 /chap02/v1/~ 시작하는 요청을 처리하는 서블릿
 @WebServlet("/chap02/v2/*")
 public class FrontControllerV2 extends HttpServlet {
 
