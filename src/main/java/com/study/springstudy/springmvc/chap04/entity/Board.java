@@ -1,5 +1,6 @@
 package com.study.springstudy.springmvc.chap04.entity;
 
+import com.study.springstudy.springmvc.chap03.dto.ScorePostDto;
 import lombok.*;
 
 import java.sql.ResultSet;
@@ -39,4 +40,6 @@ public class Board {
         this.viewCount = rs.getInt("view_count");
         this.regDateTime = rs.getTimestamp("reg_date_time").toLocalDateTime();
     }
+
+
 }

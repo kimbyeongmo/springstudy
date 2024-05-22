@@ -1,11 +1,15 @@
 package com.study.springstudy.springmvc.chap04.dto;
 
 import com.study.springstudy.springmvc.chap04.entity.Board;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.format.DateTimeFormatter;
 
-@Getter
+@Getter @Setter @ToString
+@AllArgsConstructor
 public class BoardDetailResponseDto {
 
     private int boardNo;
