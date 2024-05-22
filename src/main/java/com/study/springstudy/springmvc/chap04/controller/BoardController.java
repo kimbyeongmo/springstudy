@@ -2,11 +2,10 @@ package com.study.springstudy.springmvc.chap04.controller;
 
 import com.study.springstudy.springmvc.chap04.common.Page;
 import com.study.springstudy.springmvc.chap04.common.PageMaker;
+import com.study.springstudy.springmvc.chap04.common.Search;
 import com.study.springstudy.springmvc.chap04.dto.BoardDetailResponseDto;
 import com.study.springstudy.springmvc.chap04.dto.BoardListResponseDto;
 import com.study.springstudy.springmvc.chap04.dto.BoardWriteRequestDto;
-import com.study.springstudy.springmvc.chap04.entity.Board;
-import com.study.springstudy.springmvc.chap04.repository.BoardRepository;
 import com.study.springstudy.springmvc.chap04.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,11 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/board")
@@ -30,7 +26,7 @@ public class BoardController {
 
     // 1. 목록 조회 요청 (/board/list : GET)
     @GetMapping("/list")
-    public String list(Page page, Model model) {
+    public String list(Search page, Model model) {
         System.out.println("/board/list GET");
 
         // 서비스에게 조회 요청 위임
