@@ -8,7 +8,7 @@
     <select id="findAll" resultType="board">
         SELECT * FROM tbl_board
         ORDER BY board_no DESC
-        LIMIT #{pageStart},#{amount}
+        LIMIT #{pageStart}, #{amount}
     </select>
 
     <select id="findOne" resultType="board">
@@ -34,5 +34,9 @@
         WHERE board_no = #{boardNo}
     </update>
 
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board
+    </select>
 
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +30,13 @@ public class BoardController {
 
     // 1. 목록 조회 요청 (/board/list : GET)
     @GetMapping("/list")
-    public String list(Page page,Model model) {
+    public String list(Page page, Model model) {
         System.out.println("/board/list GET");
 
         // 서비스에게 조회 요청 위임
         List<BoardListResponseDto> bList = service.findList(page);
-
         // 페이지 정보를 생성하여 JSP에게 전송
-        PageMaker maker =new PageMaker(page);
+        PageMaker maker = new PageMaker(page, service.getCount());
 
         // 3. JSP파일에 해당 목록데이터를 보냄
         model.addAttribute("bList", bList);
