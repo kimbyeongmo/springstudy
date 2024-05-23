@@ -1,22 +1,27 @@
 package com.study.springstudy.springmvc.chap04.dto;
 
 import com.study.springstudy.springmvc.chap04.entity.Board;
+import com.study.springstudy.springmvc.chap05.entity.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-@Getter @Setter @ToString
+@Getter @ToString
 @AllArgsConstructor
 public class BoardDetailResponseDto {
 
+    private final String regDateTime;
     private int boardNo;
     private String writer;
     private String title;
     private String content;
-    private String regDateTime;
+
+    @Setter
+    private List<Reply> replies;
 
     public BoardDetailResponseDto(Board b) {
         this.boardNo = b.getBoardNo();
