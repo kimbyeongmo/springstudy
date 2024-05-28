@@ -5,7 +5,7 @@
 
 <mapper namespace="com.study.springstudy.springmvc.chap04.mapper.BoardMapper">
 
-<!--    동적 SQL 조건을 분리-->
+    <!--  동적 SQL 조건을 분리  -->
     <sql id="search">
         <if test="type == 'title'">
             WHERE title LIKE CONCAT('%', #{keyword}, '%')
@@ -40,7 +40,6 @@
         ORDER BY board_no DESC
         LIMIT #{pageStart}, #{amount}
     </select>
-
 
     <select id="findOne" resultType="board">
         SELECT * FROM tbl_board

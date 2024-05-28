@@ -3,11 +3,11 @@ package com.study.springstudy.springmvc.chap04.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardFindAllDto {
@@ -19,5 +19,4 @@ public class BoardFindAllDto {
     private LocalDateTime regDateTime;
     private int viewCount;
     private int replyCount;
-
 }
