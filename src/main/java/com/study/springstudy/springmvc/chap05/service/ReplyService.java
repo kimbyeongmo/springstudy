@@ -1,8 +1,11 @@
 package com.study.springstudy.springmvc.chap05.service;
 
 import com.study.springstudy.springmvc.chap04.common.Page;
+import com.study.springstudy.springmvc.chap04.common.PageMaker;
+import com.study.springstudy.springmvc.chap05.dto.request.ReplyModifyDto;
 import com.study.springstudy.springmvc.chap05.dto.request.ReplyPostDto;
 import com.study.springstudy.springmvc.chap05.dto.response.ReplyDetailDto;
+import com.study.springstudy.springmvc.chap05.dto.response.ReplyListDto;
 import com.study.springstudy.springmvc.chap05.entity.Reply;
 import com.study.springstudy.springmvc.chap05.mapper.ReplyMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +24,17 @@ public class ReplyService {
     private final ReplyMapper replyMapper;
 
     // 댓글 목록 전체조회
-    public List<ReplyDetailDto> getReplies(long boardNo, Page page) {
+    public ReplyListDto getReplies(long boardNo, Page page) {
         List<Reply> replies = replyMapper.findAll(boardNo, page);
 
-        return replies.stream()
+        List<ReplyDetailDto> dtoList = replies.stream()
                 .map(r -> new ReplyDetailDto(r))
                 .collect(Collectors.toList());
+
+        return ReplyListDto.builder()
+                .replies(dtoList)
+                .pageInfo(new PageMaker(page, replyMapper.count(boardNo)))
+                .build();
     }
 
     // 댓글 입력
@@ -48,17 +54,22 @@ public class ReplyService {
     }
 
     // 댓글 수정
-    public void modify() {
+    public ReplyListDto modify(ReplyModifyDto dto) {
 
+        replyMapper.modify(dto.toEntity());
+
+        return getReplies(dto.getBno(), new Page(1, 10));
     }
 
     // 댓글 삭제
     @Transactional
-    public List<ReplyDetailDto> remove(long rno) {
+    public ReplyListDto remove(long rno) {
         // 댓글 번호로 원본 글번호 찾기
         long bno = replyMapper.findBno(rno);
         boolean flag = replyMapper.delete(rno);
         // 삭제 후 삭제된 목록을 리턴
-        return flag ? getReplies(bno, new Page(1, 10)) : Collections.emptyList();
+        return flag ? getReplies(bno, new Page(1, 10)) : null;
     }
+
+
 }
