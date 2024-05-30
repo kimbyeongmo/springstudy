@@ -24,8 +24,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Member {
 
-    private String account;
+    @Setter
     private String password;
+
+    private String account;
     private String name;
     private String email;
     private Auth auth;
