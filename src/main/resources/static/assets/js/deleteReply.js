@@ -13,7 +13,7 @@ const fetchDeleteReply = async (rno) => {
     return;
   }
 
-  window.scrollTo(0, 800); // 삭제 후 페이지 상단으로 이동
+  window.scrollTo(0, 0); // 삭제 후 페이지 상단으로 이동
   await fetchInfScrollReplies();
 };
 
