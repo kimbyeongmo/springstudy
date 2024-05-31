@@ -3,7 +3,7 @@ package com.study.springstudy.springmvc.chap05.dto.request;
 import lombok.*;
 import org.checkerframework.checker.units.qual.A;
 
-@Getter @ToString
+@Setter @Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
