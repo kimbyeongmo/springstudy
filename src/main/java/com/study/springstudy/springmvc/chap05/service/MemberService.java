@@ -1,5 +1,6 @@
 package com.study.springstudy.springmvc.chap05.service;
 
+import com.study.springstudy.springmvc.chap05.dto.request.AutoLoginDto;
 import com.study.springstudy.springmvc.chap05.dto.request.LoginDto;
 import com.study.springstudy.springmvc.chap05.dto.request.SignUpDto;
 import com.study.springstudy.springmvc.chap05.dto.response.LoginUserInfoDto;
@@ -12,9 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDateTime;
+
 import static com.study.springstudy.springmvc.chap05.service.LoginResult.*;
+import static com.study.springstudy.springmvc.util.LoginUtil.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +44,7 @@ public class MemberService {
 
 
     // 로그인 검증 처리
-    public LoginResult authenticate(LoginDto dto, HttpSession session) {
+    public LoginResult authenticate(LoginDto dto, HttpSession session, HttpServletResponse response) {
 
         // 회원가입 여부 확인
         String account = dto.getAccount();
@@ -59,14 +65,39 @@ public class MemberService {
             return NO_PW;
         }
 
+
+        // 자동로그인 추가 처리
+        if (dto.isAutoLogin()) {
+            // 1. 자동 로그인 쿠키 생성
+            // - 쿠키 내부에 절대로 중복되지 않는 유니크한 값을 저장
+            //   (UUID, SessionID)
+            String sessionId = session.getId();
+            Cookie autoLoginCookie = new Cookie(AUTO_LOGIN_COOKIE, sessionId);
+            // 쿠키 설정
+            autoLoginCookie.setPath("/"); // 쿠키를 사용할 경로
+            autoLoginCookie.setMaxAge(60 * 60 * 24 * 90); // 자동로그인 유지 시간
+
+            // 2. 쿠키를 클라이언트에 전송 - 응답바디에 실어보내야 함
+            response.addCookie(autoLoginCookie);
+
+            // 3. DB에도 해당 쿠키값을 저장
+            memberMapper.updateAutoLogin(
+                    AutoLoginDto.builder()
+                            .sessionId(sessionId)
+                            .limitTime(LocalDateTime.now().plusDays(90))
+                            .account(account)
+                            .build());
+        }
+
+
         log.info("{}님 로그인 성공", foundMember.getName());
 
-        // 세션의 수명 : 설정된 시간 or 브라우저를 닫기 전까지
+        // 세션의 수명 : 설정된 시간 OR 브라우저를 닫기 전까지
         int maxInactiveInterval = session.getMaxInactiveInterval();
-        session.setMaxInactiveInterval(60*60); // 세션 수명 1시간 설정
-        log.debug("session time:{}", maxInactiveInterval);
+        session.setMaxInactiveInterval(60 * 60); // 세션 수명 1시간 설정
+        log.debug("session time: {}", maxInactiveInterval);
 
-        session.setAttribute(LoginUtil.LOGIN, new LoginUserInfoDto(foundMember));
+        session.setAttribute(LOGIN, new LoginUserInfoDto(foundMember));
 
         return SUCCESS;
     }
