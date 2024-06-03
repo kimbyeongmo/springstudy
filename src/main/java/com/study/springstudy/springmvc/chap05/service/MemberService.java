@@ -12,8 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -86,10 +88,17 @@ public class MemberService {
                             .sessionId(sessionId)
                             .limitTime(LocalDateTime.now().plusDays(90))
                             .account(account)
-                            .build());
+                            .build()
+            );
         }
 
 
+        maintainLoginState(session, foundMember);
+
+        return SUCCESS;
+    }
+
+    public static void maintainLoginState(HttpSession session, Member foundMember) {
         log.info("{}님 로그인 성공", foundMember.getName());
 
         // 세션의 수명 : 설정된 시간 OR 브라우저를 닫기 전까지
@@ -98,8 +107,6 @@ public class MemberService {
         log.debug("session time: {}", maxInactiveInterval);
 
         session.setAttribute(LOGIN, new LoginUserInfoDto(foundMember));
-
-        return SUCCESS;
     }
 
 
@@ -108,4 +115,21 @@ public class MemberService {
         return memberMapper.existsById(type, keyword);
     }
 
+    public void autoLoginClear(HttpServletRequest request,HttpServletResponse response) {
+
+        // 1. 쿠키 제거하기
+        Cookie c = WebUtils.getCookie(request, AUTO_LOGIN_COOKIE);
+        if(c!=null){
+            c.setPath("/");
+            c.setMaxAge(0);
+            response.addCookie(c);
+        }
+        // 2. DB에 자동로그인 컬럼들을 원래대로 돌려놓음
+        memberMapper.updateAutoLogin(
+                AutoLoginDto.builder()
+                        .sessionId("none")
+                        .limitTime(LocalDateTime.now())
+                        .account(LoginUtil.getLoggedInUserAccount(request.getSession()))
+                        .build());
+    }
 }
