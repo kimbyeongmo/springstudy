@@ -24,14 +24,17 @@ import java.time.LocalDateTime;
 @Builder
 public class Member {
 
+    private String account;
+
     @Setter
     private String password;
 
-    private String account;
     private String name;
     private String email;
     private Auth auth;
     private LocalDateTime regDate;
     private String sessionId;
     private LocalDateTime limitTime;
+    @Setter
+    private String profileImg;
 }

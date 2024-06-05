@@ -54,36 +54,44 @@
                 <div id="replies" class="row">
                     <div class="offset-md-1 col-md-10">
                         <!-- 댓글 쓰기 영역 -->
-                        <div class="card">                          
+                        <div class="card">
                             <div class="card-body">
 
+                                <c:if test="${empty login}">
+                                    <a href="/members/sign-in?redirect=/board/detail?bno=${bbb.boardNo}">댓글은 로그인 후 작성해주세요!!</a>
+                                </c:if>
 
-                              <c:if test="${empty login}">
-                                <a href="/members/sign-in">댓글은 로그인 후 작성해주세요!!</a>
-                              </c:if>
+                                <c:if test="${not empty login}">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="newReplyText" hidden>댓글 내용</label>
+                                                <textarea rows="3" id="newReplyText" name="replyText" class="form-control"
+                                                    placeholder="댓글을 입력해주세요."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
 
+                                                <div class="profile-box">
+                                                    <c:choose>
+                                                        <c:when test="${login != null && login.profile != null}">
+                                                        <img src="${login.profile}" alt="profile image">
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <img src="/assets/img/anonymous.jpg" alt="profile image">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
 
-                              <c:if test="${not empty login}">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <div class="form-group">
-                                            <label for="newReplyText" hidden>댓글 내용</label>
-                                            <textarea rows="3" id="newReplyText" name="replyText" class="form-control"
-                                                placeholder="댓글을 입력해주세요."></textarea>
+                                                <label for="newReplyWriter" hidden>댓글 작성자</label>
+                                                <input id="newReplyWriter" name="replyWriter" type="text" value="${login.nickName}" readonly
+                                                    class="form-control" placeholder="작성자 이름" style="margin-bottom: 6px;">
+                                                <button id="replyAddBtn" type="button" class="btn btn-dark form-control">등록</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="newReplyWriter" hidden>댓글 작성자</label>
-                                            <input id="newReplyWriter" name="replyWriter" type="text" value="${login.nickName}" readonly
-                                                class="form-control" placeholder="작성자 이름" style="margin-bottom: 6px;">
-                                            <button id="replyAddBtn" type="button" class="btn btn-dark form-control">등록</button>
-                                        </div>
-                                    </div>
-                                </div>
-                              </c:if>
-
-
+                                </c:if>
                             </div>
                         </div> <!-- end reply write -->
 

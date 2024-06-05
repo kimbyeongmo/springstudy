@@ -1,6 +1,6 @@
-import { BASE_URL } from "./reply.js";
-import { showSpinner, hideSpinner } from "./spinner.js";
-import { callApi } from "./api.js";
+import { BASE_URL } from './reply.js';
+import { showSpinner, hideSpinner } from './spinner.js';
+import { callApi } from './api.js';
 
 function getRelativeTime(createAt) {
   // 현재 시간 구하기
@@ -20,7 +20,7 @@ function getRelativeTime(createAt) {
   const years = Math.floor(diff / 1000 / 60 / 60 / 24 / 365);
 
   if (seconds < 60) {
-    return "방금 전";
+    return '방금 전';
   } else if (minutes < 60) {
     return `${minutes}분 전`;
   } else if (hours < 24) {
@@ -35,7 +35,7 @@ function getRelativeTime(createAt) {
 }
 
 function renderPage({ begin, end, pageInfo, prev, next }) {
-  let tag = "";
+  let tag = '';
 
   // prev 만들기
   if (prev)
@@ -45,8 +45,8 @@ function renderPage({ begin, end, pageInfo, prev, next }) {
 
   // 페이지 번호 태그 만들기
   for (let i = begin; i <= end; i++) {
-    let active = "";
-    if (pageInfo.pageNo === i) active = "p-active";
+    let active = '';
+    if (pageInfo.pageNo === i) active = 'p-active';
 
     tag += `
       <li class='page-item ${active}'>
@@ -61,16 +61,16 @@ function renderPage({ begin, end, pageInfo, prev, next }) {
     }'>다음</a></li>`;
 
   // 페이지 태그 ul에 붙이기
-  const $pageUl = document.querySelector(".pagination");
+  const $pageUl = document.querySelector('.pagination');
   $pageUl.innerHTML = tag;
 }
 
 export function renderReplies({ pageInfo, replies }) {
   // 댓글 수 렌더링
-  document.getElementById("replyCnt").textContent = pageInfo.totalCount;
+  document.getElementById('replyCnt').textContent = pageInfo.totalCount;
 
   // 댓글 목록 렌더링
-  let tag = "";
+  let tag = '';
   if (replies && replies.length > 0) {
     replies.forEach(({ reply_no: rno, writer, text, createAt }) => {
       tag += `
@@ -97,7 +97,7 @@ export function renderReplies({ pageInfo, replies }) {
     tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
 
-  document.getElementById("replyData").innerHTML = tag;
+  document.getElementById('replyData').innerHTML = tag;
 
   // 페이지 태그 렌더링
   renderPage(pageInfo);
@@ -105,7 +105,7 @@ export function renderReplies({ pageInfo, replies }) {
 
 // 서버에서 댓글 목록 가져오는 비동기 요청 함수
 export async function fetchReplies(pageNo = 1) {
-  const bno = document.getElementById("wrap").dataset.bno; // 게시물 글번호
+  const bno = document.getElementById('wrap').dataset.bno; // 게시물 글번호
 
   const replyResponse = await callApi(`${BASE_URL}/${bno}/page/${pageNo}`);
 
@@ -119,15 +119,14 @@ export async function fetchReplies(pageNo = 1) {
 
 // 페이지 클릭 이벤트 생성 함수
 export function replyPageClickEvent() {
-  document.querySelector(".pagination").addEventListener("click", (e) => {
+  document.querySelector('.pagination').addEventListener('click', (e) => {
     e.preventDefault();
     // console.log(e.target.getAttribute('href'));
-    fetchReplies(e.target.getAttribute("href"));
+    fetchReplies(e.target.getAttribute('href'));
   });
 }
 
 // =============== 무한 스크롤 전용 함수 ============= //
-
 let currentPage = 1; // 현재 무한스크롤시 진행되고 있는 페이지 번호
 let isFetching = false; // 데이터를 불러오는 중에는 더 가져오지 않게 제어하기 위한 논리변수
 let totalReplies = 0; // 총 댓글 수
@@ -135,14 +134,16 @@ let loadedReplies = 0; // 로딩된 댓글 수
 
 function appendReplies({ replies, loginUser }) {
   // 댓글 목록 렌더링
-  let tag = "";
+  let tag = '';
   if (replies && replies.length > 0) {
-    replies.forEach(
-      ({ reply_no: rno, writer, text, createAt, account: replyAccount }) => {
-        tag += `
+    replies.forEach(({ reply_no: rno, writer, text, createAt, account: replyAccount, profile }) => {
+      tag += `
         <div id='replyContent' class='card-body' data-reply-id='${rno}'>
             <div class='row user-block'>
                 <span class='col-md-3'>
+
+                    <img class='reply-profile' src='${profile ? profile : '/assets/img/anonymous.jpg'}' alt='profile image'>
+
                     <b>${writer}</b>
                 </span>
                 <span class='offset-md-6 col-md-3 text-right'><b>${getRelativeTime(
@@ -154,29 +155,28 @@ function appendReplies({ replies, loginUser }) {
                 <div class='col-md-3 text-right'>
                 `;
 
-        // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
-        // 로그인한 회원 권한, 로그인한 회원 계정명, 해당 댓글의 계정명
-        if (loginUser) {
-          const { auth, account: loginUserAccount } = loginUser;
+      // 관리자이거나 내가 쓴 댓글일 경우만 조건부 렌더링
+      // 로그인한 회원 권한, 로그인한 회원 계정명, 해당 댓글의 계정명
+      if (loginUser) {
+        const { auth, account: loginUserAccount } = loginUser;
 
-          if (auth === "ADMIN" || replyAccount === loginUserAccount) {
-            tag += `<a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;
-                <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>
-                `;
-          }
+        if (auth === 'ADMIN' || replyAccount === loginUserAccount) {    
+          tag += `<a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;
+                  <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>
+                  `;
         }
+      }
 
-        tag += `</div>
+      tag += `</div>
             </div>
         </div>
         `;
-      }
-    );
+    });
   } else {
     tag = `<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>`;
   }
-  document.getElementById("replyData").innerHTML += tag;
-  console.log("append replies");
+  document.getElementById('replyData').innerHTML += tag;
+  console.log('append replies');
 
   // 로드된 댓글 수 업데이트
   loadedReplies += replies.length;
@@ -188,12 +188,13 @@ export async function fetchInfScrollReplies(pageNo = 1) {
 
   isFetching = true;
 
-  const bno = document.getElementById("wrap").dataset.bno; // 게시물 글번호
+  const bno = document.getElementById('wrap').dataset.bno; // 게시물 글번호
+  
+  const replyResponse 
+    = await callApi(`${BASE_URL}/${bno}/page/${pageNo}`);
 
-  const replyResponse = await callApi(`${BASE_URL}/${bno}/page/${pageNo}`);
-
-  console.log("서버 response: ", replyResponse);
-
+  console.log('서버 response: ', replyResponse);
+  
   // const res = await fetch(`${BASE_URL}/${bno}/page/${pageNo}`);
   // const replyResponse = await res.json();
 
@@ -202,10 +203,10 @@ export async function fetchInfScrollReplies(pageNo = 1) {
     totalReplies = replyResponse.pageInfo.totalCount;
     loadedReplies = 0; // 댓글 입력, 삭제시 다시 1페이지 로딩시 초기값으로 만들어주기
     // 댓글 수 렌더링
-    document.getElementById("replyCnt").textContent = totalReplies;
+    document.getElementById('replyCnt').textContent = totalReplies;
     // 초기 댓글 reset
-    document.getElementById("replyData").innerHTML = "";
-    console.log("reset replyData");
+    document.getElementById('replyData').innerHTML = '';
+    console.log('reset replyData');
 
     setupInfiniteScroll();
   }
@@ -243,10 +244,10 @@ async function scrollHandler(e) {
 
 // 무한 스크롤 이벤트 생성 함수
 export function setupInfiniteScroll() {
-  window.addEventListener("scroll", scrollHandler);
+  window.addEventListener('scroll', scrollHandler);
 }
 
 // 무한 스크롤 이벤트 삭제 함수
 export function removeInfiniteScroll() {
-  window.removeEventListener("scroll", scrollHandler);
+  window.removeEventListener('scroll', scrollHandler);
 }

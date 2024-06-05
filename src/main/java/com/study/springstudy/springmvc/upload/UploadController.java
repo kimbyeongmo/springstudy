@@ -18,7 +18,7 @@ public class UploadController {
     // 업로드 루트 경로
 //    private String rootPath = "D:/spring-prj/upload";
 
-    private String rootPath = "C:\\Users\\user\\Desktop\\spring-prj\\upload";
+    private String rootPath = "/Users/superstar/spring-prj/upload";
 
     @GetMapping("/upload/form")
     public String uploadForm() {
@@ -38,12 +38,14 @@ public class UploadController {
         File root = new File(rootPath);
         if (!root.exists()) root.mkdirs();
 
-        FileUtil.uploadFile(rootPath,file);
+
+        FileUtil.uploadFile(rootPath, file);
+
 
         // 2. 첨부파일의 경로를 만들어서 파일 객체로 포장
 //        File uploadFile = new File(rootPath, file.getOriginalFilename());
-//
-//        // 3. MultipartFile객체로 저장명령
+
+        // 3. MultipartFile객체로 저장명령
 //        try {
 //            file.transferTo(uploadFile);
 //        } catch (IOException e) {
