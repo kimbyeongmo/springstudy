@@ -8,7 +8,7 @@
   <style>
 
     body {
-      background: url('/assets/img/마멜이.png') no-repeat center/cover;
+      background: url('../../../resources/static/assets/img/jjangoo.png') no-repeat center/cover;
     }
   </style>
 </head>

@@ -33,7 +33,7 @@
           <!-- 검색창 영역 -->
           <div class="search">
             <form action="/board/list" method="get">
-
+              <input type="hidden" name="amount" value="${s.amount}">
               <select class="form-select" name="type" id="search-type">
                 <option value="title">제목</option>
                 <option value="content">내용</option>
@@ -51,9 +51,9 @@
           </div>
 
           <div class="amount">
-            <div><a href="#">6</a></div>
-            <div><a href="#">18</a></div>
-            <div><a href="#">30</a></div>
+            <div><a href="/board/list?amount=6">6</a></div>
+            <div><a href="/board/list?pageNo=${maker.pageInfo.pageNo}&type=${s.type}&keyword=${s.keyword}&amount=18">18</a></div>
+            <div><a href="/board/list?pageNo=${maker.pageInfo.pageNo}&type=${s.type}&keyword=${s.keyword}&amount=30">30</a></div>
           </div>
 
         </div>
@@ -124,34 +124,34 @@
 
               <c:if test="${maker.pageInfo.pageNo != 1}">
                 <li class="page-item">
-                  <a class="page-link" href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a>
+                  <a class="page-link" href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}&amount=${maker.pageInfo.amount}">&lt;&lt;</a>
                 </li>
               </c:if>
 
               <c:if test="${maker.prev}">
                 <li class="page-item">
                   <a class="page-link"
-                    href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
+                    href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}&amount=${maker.pageInfo.amount}">prev</a>
                 </li>
               </c:if>
 
               <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                 <li data-page-num="${i}" class="page-item">
-                  <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+                  <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}&amount=${maker.pageInfo.amount}">${i}</a>
                 </li>
               </c:forEach>
 
               <c:if test="${maker.next}">
                 <li class="page-item">
                   <a class="page-link"
-                    href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
+                    href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}&amount=${maker.pageInfo.amount}">next</a>
                 </li>
               </c:if>
 
               <c:if test="${maker.pageInfo.pageNo != maker.finalPage}">
                 <li class="page-item">
                   <a class="page-link"
-                    href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
+                    href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}&amount=${maker.pageInfo.amount}">&gt;&gt;</a>
                 </li>
               </c:if>
 
