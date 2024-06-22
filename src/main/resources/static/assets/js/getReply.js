@@ -62,7 +62,7 @@ function renderPage({ begin, end, pageInfo, prev, next }) {
 
   // 페이지 태그 ul에 붙이기
   const $pageUl = document.querySelector('.pagination');
-  $pageUl.innerHTML = tag;
+  $pageUl.innerHTML = tag;``
 }
 
 export function renderReplies({ pageInfo, replies }) {
@@ -167,7 +167,8 @@ function appendReplies({ replies, loginUser }) {
         }
       }
 
-      tag += `</div>
+      tag += `<a class="fas fa-heart btn btn-sm btn-outline-dark">0</a>
+              </div>
             </div>
         </div>
         `;

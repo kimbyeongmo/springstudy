@@ -145,8 +145,8 @@
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button id="replyModBtn" type="button" class="btn btn-dark">수정</button>
-                                <button id="modal-close" type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기
-                                </button>
+                                <button id="modal-close" type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+
                             </div>
                         </div>
                     </div>
